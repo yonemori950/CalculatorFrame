@@ -40,10 +40,10 @@ public class CalculatorFrame extends JFrame {
             // 　数字ボタンだけ動作をつける
             //------------------------------------------------------------------
             if (
-            	    text.equals("") || text.equals("") || text.equals("") ||
-            	    text.equals("") || text.equals("") || text.equals("") ||
-            	    text.equals("") || text.equals("") || text.equals("") ||
-            	    text.equals("")
+            	    text.equals("0") || text.equals("1") || text.equals("2") ||
+            	    text.equals("3") || text.equals("4") || text.equals("5") ||
+            	    text.equals("6") || text.equals("7") || text.equals("8") ||
+            	    text.equals("9")
             	) {
             //------------------------------------------------------------------
             	    button.addActionListener(new ActionListener() {
