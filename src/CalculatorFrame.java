@@ -1,12 +1,13 @@
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 
 public class CalculatorFrame extends JFrame {
     private JTextField display;
@@ -15,18 +16,16 @@ public class CalculatorFrame extends JFrame {
         setTitle("電卓アプリ");
         setSize(300, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // 画面中央に表示
+        setLocationRelativeTo(null); // 中央に表示
 
-        // 表示欄（入力＆結果用）
+        // 表示欄
         display = new JTextField();
         display.setEditable(false);
         display.setFont(new Font("Arial", Font.PLAIN, 24));
         add(display, BorderLayout.NORTH);
 
-        // ボタン配置用のパネル
+        // ボタンパネル
         JPanel buttonPanel = new JPanel(new GridLayout(4, 4, 5, 5));
-
-        // ボタンのラベル一覧
         String[] buttons = {
             "7", "8", "9", "+",
             "4", "5", "6", "-",
@@ -37,6 +36,24 @@ public class CalculatorFrame extends JFrame {
         for (String text : buttons) {
             JButton button = new JButton(text);
             button.setFont(new Font("Arial", Font.BOLD, 20));
+
+            // 　数字ボタンだけ動作をつける
+            //------------------------------------------------------------------
+            if (
+            	    text.equals("0") || text.equals("1") || text.equals("2") ||
+            	    text.equals("3") || text.equals("4") || text.equals("5") ||
+            	    text.equals("6") || text.equals("7") || text.equals("8") ||
+            	    text.equals("9")
+            	) {
+            //------------------------------------------------------------------
+            	    button.addActionListener(new ActionListener() {
+            	        public void actionPerformed(ActionEvent e) {
+            	            display.setText(display.getText() + text);
+            	        }
+            	    });
+            	}
+
+
             buttonPanel.add(button);
         }
 
