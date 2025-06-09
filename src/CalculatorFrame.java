@@ -11,23 +11,23 @@ import javax.swing.JTextField;
 
 public class CalculatorFrame extends JFrame {
     private JTextField display;
-    private double firstNumber = 0;     // 最初の数字
-    private String operator = "";       // 演算子（+など）
-    private boolean isNewInput = false; // 新しい数字の入力かどうか
+    private double firstNumber = 0;
+    private String operator = "";
+    private boolean isNewInput = false;
 
     public CalculatorFrame() {
         setTitle("電卓アプリ");
         setSize(300, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // 画面中央に表示
+        setLocationRelativeTo(null);
 
-        // 表示欄の設定
+        // 表示欄
         display = new JTextField();
         display.setEditable(false);
         display.setFont(new Font("Arial", Font.PLAIN, 24));
         add(display, BorderLayout.NORTH);
 
-        // ボタンパネルの設定（4×4）
+        // ボタンパネル
         JPanel buttonPanel = new JPanel(new GridLayout(4, 4, 5, 5));
         String[] buttons = {
             "7", "8", "9", "+",
@@ -49,19 +49,19 @@ public class CalculatorFrame extends JFrame {
                 button.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         if (isNewInput) {
-                            display.setText(text); // 新しい入力として上書き
+                            display.setText(text);
                             isNewInput = false;
                         } else {
-                            display.setText(display.getText() + text); // 連結して表示
+                            display.setText(display.getText() + text);
                         }
                     }
                 });
 
-            // + ボタン
-            } else if (text.equals("+")) {
+            // 演算子（+, -, *, /）
+            } else if (text.equals("+") || text.equals("-") || text.equals("*") || text.equals("/")) {
                 button.addActionListener(e -> {
                     firstNumber = Double.parseDouble(display.getText());
-                    operator = "+";
+                    operator = text;
                     isNewInput = true;
                 });
 
@@ -71,8 +71,17 @@ public class CalculatorFrame extends JFrame {
                     double secondNumber = Double.parseDouble(display.getText());
                     double result = 0;
 
-                    if (operator.equals("+")) {
-                        result = firstNumber + secondNumber;
+                    switch (operator) {
+                        case "+": result = firstNumber + secondNumber; break;
+                        case "-": result = firstNumber - secondNumber; break;
+                        case "*": result = firstNumber * secondNumber; break;
+                        case "/":
+                            if (secondNumber == 0) {
+                                display.setText("エラー: 0除算");
+                                isNewInput = true;
+                                return;
+                            }
+                            result = firstNumber / secondNumber; break;
                     }
 
                     display.setText(String.valueOf(result));
